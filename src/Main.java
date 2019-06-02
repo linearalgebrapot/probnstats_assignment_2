@@ -2,6 +2,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		System.out.println("---- Distribution Test ----");
+		/* uncomment below to print results */
+		
+		
 		/* Uniform Distribution */
 		UniformDistribution uniformDistribution = new UniformDistribution(100000, 100);
 		TransformedDistribution uniformTransformedDistribution = new TransformedDistribution(uniformDistribution, 1, 0, 5*5);
@@ -35,7 +39,7 @@ public class Main {
 //		normalTransformedDistribution.showDistributionData();
 //		normalJointDistribution.showJointDistributionData();
 		
-		normalJointDistribution.showTrial();
+//		normalJointDistribution.showTrial();
 		
 		
 		/* Binomial Distribution */
