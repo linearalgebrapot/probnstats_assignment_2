@@ -41,13 +41,13 @@ public class JointDistribution {
 			previousY = sortedTrial[i].getY();
 		}
 		
-		// initialize pointArray
+		// initialize point3DArray
 		point3DArray = new Point3D[numberOfUniqueXY];
 		for (int i=0; i<point3DArray.length; i++) {
 			point3DArray[i] = new Point3D();
 		}
 		
-		// set pointArray ((x, y) is unique (x, y), z is frequency)
+		// set point3DArray ((x, y) is unique (x, y), z is frequency)
 		point3DArray[0].setX(sortedTrial[0].getX());
 		point3DArray[0].setY(sortedTrial[0].getY());
 		point3DArray[0].setZ(1);
@@ -67,6 +67,86 @@ public class JointDistribution {
 		// change z (from frequency to probability)
 		for (int i=0; i<point3DArray.length; i++) {
 			point3DArray[i].setZ(point3DArray[i].getZ() / sortedTrial.length);
+		}
+	}
+	
+	public void showMarginalDistribution1() {
+		// get number of unique x
+		int numberOfUniqueX = 1;
+		double previousX = point3DArray[0].getX();
+		for (int i=1; i<point3DArray.length; i++) {
+			if (previousX != point3DArray[i].getX()) numberOfUniqueX++;
+			previousX = point3DArray[i].getX();
+		}
+		
+		// initialize marginalDistribution1
+		Point[] marginalDistribution1 = new Point[numberOfUniqueX];
+		for (int i=0; i<marginalDistribution1.length; i++) {
+			marginalDistribution1[i] = new Point();
+		}
+		
+		// set marginalDistribution1 (x is unique x, y is frequency)
+		marginalDistribution1[0].setX(point3DArray[0].getX());
+		marginalDistribution1[0].setY(1);
+		int marginalDistribution1Index = 0;
+		for (int i=1; i<point3DArray.length; i++) {
+			if (marginalDistribution1[marginalDistribution1Index].getX() == point3DArray[i].getX()) marginalDistribution1[marginalDistribution1Index].setY(marginalDistribution1[marginalDistribution1Index].getY()+1);
+			else {
+				marginalDistribution1Index++;
+				marginalDistribution1[marginalDistribution1Index].setX(point3DArray[i].getX());
+				marginalDistribution1[marginalDistribution1Index].setY(1);
+			}
+		}
+		
+		// change y (from frequency to probability)
+		for (int i=0; i<marginalDistribution1.length; i++) {
+			marginalDistribution1[i].setY(marginalDistribution1[i].getY() / point3DArray.length);
+		}
+		
+		// show marginalDistribution1
+		System.out.println("RV, probability: ");
+		for (int i=0; i<marginalDistribution1.length; i++) {
+			System.out.println(marginalDistribution1[i].getX() + " " + marginalDistribution1[i].getY());
+		}
+	}
+	
+	public void showMarginalDistribution2() {
+		// get number of unique x
+		int numberOfUniqueX = 1;
+		double previousX = point3DArray[0].getY();
+		for (int i=1; i<point3DArray.length; i++) {
+			if (previousX != point3DArray[i].getY()) numberOfUniqueX++;
+			previousX = point3DArray[i].getY();
+		}
+		
+		// initialize marginalDistribution2
+		Point[] marginalDistribution2 = new Point[numberOfUniqueX];
+		for (int i=0; i<marginalDistribution2.length; i++) {
+			marginalDistribution2[i] = new Point();
+		}
+		
+		// set marginalDistribution2 (x is unique x, y is frequency)
+		marginalDistribution2[0].setX(point3DArray[0].getY());
+		marginalDistribution2[0].setY(1);
+		int marginalDistribution2Index = 0;
+		for (int i=1; i<point3DArray.length; i++) {
+			if (marginalDistribution2[marginalDistribution2Index].getX() == point3DArray[i].getY()) marginalDistribution2[marginalDistribution2Index].setY(marginalDistribution2[marginalDistribution2Index].getY()+1);
+			else {
+				marginalDistribution2Index++;
+				marginalDistribution2[marginalDistribution2Index].setX(point3DArray[i].getY());
+				marginalDistribution2[marginalDistribution2Index].setY(1);
+			}
+		}
+		
+		// change y (from frequency to probability)
+		for (int i=0; i<marginalDistribution2.length; i++) {
+			marginalDistribution2[i].setY(marginalDistribution2[i].getY() / point3DArray.length);
+		}
+		
+		// show marginalDistribution2
+		System.out.println("RV, probability: ");
+		for (int i=0; i<marginalDistribution2.length; i++) {
+			System.out.println(marginalDistribution2[i].getX() + " " + marginalDistribution2[i].getY());
 		}
 	}
 	
