@@ -1,4 +1,8 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Scanner;
 
 public class Distribution {	
 	private double[] trial; // result of every trial(every random variable)
@@ -125,4 +129,36 @@ public class Distribution {
 		System.out.println("mean : " + getMean());
 		System.out.println("variance : " + getVariance());
 	}
+	
+	public void writeDistributionData() {
+	      Scanner sc = new Scanner(System.in);
+	      PrintWriter outputStream = null;
+	      String fileName;
+	      
+	      try {
+	         System.out.print("파일 이름  : ");
+	         fileName = sc.nextLine();
+	         if(fileName.equals("d")) {
+	            Calendar cal = Calendar.getInstance();
+	            
+	            fileName = Integer.toString(cal.get(Calendar.YEAR))+"-"+Integer.toString(cal.get(Calendar.MONTH)+1)+"-"+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+" "+Integer.toString(cal.get(Calendar.HOUR))+"-"+Integer.toString(cal.get(Calendar.MINUTE))+"-"+Integer.toString(cal.get(Calendar.SECOND))+".txt";
+	            //System.out.println(fileName);
+	         }
+	         outputStream = new PrintWriter(fileName);
+	      }
+	      catch(FileNotFoundException e) {
+	         System.out.println("Problem opening files.");
+	         System.exit(0);;
+	      }
+	      
+	      outputStream.println("RV, probability :");
+	      for (int i=0; i<pointArray.length; i++) {
+	         outputStream.println(pointArray[i].getX() + " " + pointArray[i].getY());
+	      }
+	      outputStream.println("mean : " + getMean());
+	      outputStream.println("variance : " + getVariance());
+	      
+	      outputStream.close();
+	      sc.close();
+	   }
 }

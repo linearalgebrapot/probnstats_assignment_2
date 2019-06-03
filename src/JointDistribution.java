@@ -1,4 +1,8 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Scanner;
 
 public class JointDistribution {
 	private Point[] trial; // result of every trial(every random variables)
@@ -184,4 +188,37 @@ public class JointDistribution {
 		System.out.println("covariance : " + getCovariance());
 		System.out.println("correlation coefficient : " + getCorrelationCoefficient());
 	}
+	
+	public void writeJointDistributionData() {
+	      Scanner sc = new Scanner(System.in);
+	      PrintWriter outputStream = null;
+	      String fileName;
+	      
+	      try {
+	         System.out.print("파일 이름  : ");
+	         fileName = sc.nextLine();
+	         if(fileName.equals("d")) {
+	            Calendar cal = Calendar.getInstance();
+	            
+	            fileName = Integer.toString(cal.get(Calendar.YEAR))+"-"+Integer.toString(cal.get(Calendar.MONTH)+1)+"-"+Integer.toString(cal.get(Calendar.DAY_OF_MONTH))+" "+Integer.toString(cal.get(Calendar.HOUR))+"-"+Integer.toString(cal.get(Calendar.MINUTE))+"-"+Integer.toString(cal.get(Calendar.SECOND))+".txt";
+	            //System.out.println(fileName);
+	         }
+	         outputStream = new PrintWriter(fileName);
+	      }
+	      catch(FileNotFoundException e) {
+	         System.out.println("Problem opening files.");
+	         System.exit(0);;
+	      }
+	      outputStream.println("RV1, RV2, probability :");
+	      for (int i=0; i<point3DArray.length; i++) {
+	         outputStream.println(point3DArray[i].getX() + " " + point3DArray[i].getY() + " " + point3DArray[i].getZ());
+	      }
+	      outputStream.println("mean : " + getMean());
+	      outputStream.println("covariance : " + getCovariance());
+	      outputStream.println("correlation coefficient : " + getCorrelationCoefficient());
+
+	      
+	      outputStream.close();
+	      sc.close();
+	   }
 }
